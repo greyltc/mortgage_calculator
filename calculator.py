@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import humanfriendly as hf
-from scipy.optimize import minimize, minimize_scalar
+from scipy.optimize import minimize_scalar
 from typing import TypedDict
 
 
@@ -45,11 +45,11 @@ class MortgageCalculator:
         self.EAR = (1 + self.rate / 100 / compounds_per_year) ** compounds_per_year - 1
         print(f"Effective Annual Rate (EAR): {self.EAR*100} percent")
         self.rate_for_payment = (1 + self.EAR) ** (years_per_payment_period) - 1
-        self.max_payment_size_i = round(self.max_payment_size*100)
+        self.max_payment_size_i = round(self.max_payment_size * 100)
 
-    def process_payment(self, dt:float, remaining:int, maxp:int, force=False) -> tuple[int, int]:
+    def process_payment(self, dt: float, remaining: int, maxp: int, force=False) -> tuple[int, int]:
         """process one payment"""
-        rate_for_payment = (1 + self.EAR) ** (dt/self.seconds_per_year) - 1
+        rate_for_payment = (1 + self.EAR) ** (dt / self.seconds_per_year) - 1
         new_from_interest = round(rate_for_payment * remaining)
 
         if self.debug:
@@ -77,37 +77,37 @@ class MortgageCalculator:
             print(f"Results in {n_payments} payments and an actual duration of {hf.format_timespan(n_payments*self.payment_period)}")
 
             # a function for the optimizer
-            def do_fixed(at_most:int, tdelta:float, left:int) -> int:
+            def do_fixed(at_most: int, tdelta: float, left: int) -> int:
                 for i in range(n_payments):
                     payment, left = self.process_payment(tdelta, left, at_most, force=True)
                 return left
-            
+
             res = minimize_scalar(lambda x: abs(do_fixed(x, self.payment_period, remaining)))
             if res.success:
                 self.max_payment_size_i = round(res.x)
                 print(f"Discovered payment value: {self.max_payment_size_i/100} {self.unit}")
             else:
                 raise RuntimeError("Unable to discover appropraite payment to complete the loan in the target time.")
-        
+
         # now do the simulation
         payments = []
         while remaining > 0:
             dt = self.payment_period
             t += dt
             payment, new_remaining = self.process_payment(dt, remaining, self.max_payment_size_i)
-            payments.append((t, payment/100, new_remaining/100))
+            payments.append((t, payment / 100, new_remaining / 100))
             assert new_remaining < remaining, "This loan will grow without bounds."
             remaining = new_remaining
             if self.debug:
                 print(f"Payment @{t=} is {payment/100} {self.unit}")
-            
+
             total_paid = total_paid + payment
 
         print(f"Total paid after {hf.format_timespan(t)}: {total_paid/100} {self.unit}")
         print(f"With payments made every {hf.format_timespan(self.payment_period)}")
         if self.debug:
             print(f"#\tTimestamp\tPayment [{self.unit}]\tRemaining [{self.unit}]")
-            for i, (t,p,tot) in enumerate(payments):
+            for i, (t, p, tot) in enumerate(payments):
                 print(f"{i+1}\t{t:.0f}\t{p:.2f}\t{tot:.2f}")
 
 
