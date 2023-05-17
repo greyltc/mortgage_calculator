@@ -1,15 +1,17 @@
-#!/usr/bin/env python3
-
 import humanfriendly as hf
 from scipy.optimize import minimize_scalar
 from typing import TypedDict
+
+import socket
+import struct
+import time
 
 
 class MortgageCalculator:
     debug = False
     size: float = 100000  # initial loan size
     rate: float = 4.5  # advertized rate in percent
-    compound_period: float = hf.parse_timespan("1 year") / 2  # how often interest is compounded
+    compound_period: float = hf.parse_timespan("1 year")  # how often interest is compounded
     max_payment_size: float = 10000  # fixed payment size
     payment_period: float = hf.parse_timespan("1 year") / 12  # how often a payment is made
     duration: float = hf.parse_timespan("0 years")  # duration of the mortgage TODO: calculate payment from duration
@@ -25,6 +27,7 @@ class MortgageCalculator:
         payment_period: float = payment_period,
         duration: float = duration,
         unit: str = unit,
+        debug: bool = debug,
     ):
         self.size = size
         print(f"Borrowed: {self.size} {self.unit}")
@@ -46,6 +49,7 @@ class MortgageCalculator:
         print(f"Effective Annual Rate (EAR): {self.EAR*100} percent")
         self.rate_for_payment = (1 + self.EAR) ** (years_per_payment_period) - 1
         self.max_payment_size_i = round(self.max_payment_size * 100)
+        self.debug = debug
 
     def process_payment(self, dt: float, remaining: int, maxp: int, force=False) -> tuple[int, int]:
         """process one payment"""
@@ -63,11 +67,28 @@ class MortgageCalculator:
 
         return (payment, remaining - payment)
 
-    def run(self):
+    def now(self) -> float:
+        """returns number of seconds since 1970 started"""
+        addr = "pool.ntp.org"
+        REF_TIME_1970 = 2208988800  # Reference time
+        client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        data = b"\x1b" + 47 * b"\0"
+        try:
+            client.sendto(data, (addr, 123))
+            data, address = client.recvfrom(1024)
+            t = struct.unpack("!12I", data)[10]
+            t -= REF_TIME_1970
+        except:
+            t = time.time()
+
+        # pt = time.ctime(t)
+        return t
+
+    def run(self) -> list[tuple[float, float, float, float]]:
         # we're gonna do all these calcs with intiger data types in hundreths of a monetary unit
         # to avoid machine precision/rounding issues
         remaining: int = round(self.size * 100)
-        t = 0
+        t = self.now()
         total_paid: int = 0
 
         if self.duration:  # a mortgage simulation with a user-set duration
@@ -95,8 +116,10 @@ class MortgageCalculator:
             dt = self.payment_period
             t += dt
             payment, new_remaining = self.process_payment(dt, remaining, self.max_payment_size_i)
-            payments.append((t, payment / 100, new_remaining / 100))
-            assert new_remaining < remaining, "This loan will grow without bounds."
+            principal_paydown = remaining - new_remaining
+            assert principal_paydown > 0, "This loan will never end."
+            interest = payment - principal_paydown
+            payments.append((t, payment / 100, interest / 100, new_remaining / 100))
             remaining = new_remaining
             if self.debug:
                 print(f"Payment @{t=} is {payment/100} {self.unit}")
@@ -105,34 +128,5 @@ class MortgageCalculator:
 
         print(f"Total paid after {hf.format_timespan(t)}: {total_paid/100} {self.unit}")
         print(f"With payments made every {hf.format_timespan(self.payment_period)}")
-        if self.debug:
-            print(f"#\tTimestamp\tPayment [{self.unit}]\tRemaining [{self.unit}]")
-            for i, (t, p, tot) in enumerate(payments):
-                print(f"{i+1}\t{t:.0f}\t{p:.2f}\t{tot:.2f}")
 
-
-def main():
-    class Inputs(TypedDict, total=False):
-        size: float
-        rate: float
-        compound_period: float
-        max_payment_size: float
-        payment_period: float
-        duration: float
-        unit: str
-
-    inputs: Inputs = {}
-    inputs["size"] = 100000
-    inputs["rate"] = 6.0
-    inputs["compound_period"] = hf.parse_timespan("1 year") / 2
-    # inputs["max_payment_size"] = 639.81
-    inputs["max_payment_size"] = 0
-    inputs["payment_period"] = hf.parse_timespan("1 year") / 12
-    # inputs["duration"] = 0
-    inputs["duration"] = hf.parse_timespan("25 years")
-    mc = MortgageCalculator(**inputs)
-    mc.run()
-
-
-if __name__ == "__main__":
-    main()
+        return payments
