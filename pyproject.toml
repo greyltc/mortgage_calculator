@@ -1,0 +1,54 @@
+[build-system]
+requires = [
+    "hatchling >=1.16.1,<2",
+    "hatch-vcs >=0.3.0<1",
+]
+build-backend = "hatchling.build"
+
+[project]
+name = "mortgage_calculator"
+
+description = "Helps with understanding and managing a loans/mortgages"
+
+authors = [
+    { name = "Greyson Christoforo", email = "grey@christoforo.net" },
+]
+
+readme = "README.md"
+
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Development Status :: 2 - Pre-Alpha",
+]
+
+requires-python = ">=3.10"
+
+dynamic = [
+    "version",
+]
+
+dependencies = [
+    "humanfriendly",
+    "scipy",
+    "fpdf2",
+]
+
+[project.urls]
+"GitHub" = "https://github.com/greyltc/mortgage_calculator"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build]
+ignore-vcs = true
+include = [
+  "src/mortgage_calculator/*.py",
+]
+
+[tool.hatch.build.targets.wheel]
+only-include = ["src"]
+sources = ["src"]
+
+[tool.black]
+line-length = 88
+target-version = ['py310']

@@ -12,7 +12,7 @@ import pathlib
 
 def _get_main_parser() -> argparse.ArgumentParser:
     """Construct the main parser."""
-    parser = argparse.ArgumentParser(description="crunch mortgage numbers")
+    parser = argparse.ArgumentParser(description="crunch mortgage numbers", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument(
         "--size",
         "-s",
@@ -64,7 +64,7 @@ def _get_main_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--bank-name",
         "-b",
-        help="loaner",
+        help="name of loaner",
     )
     parser.add_argument(
         "--borrower-name",
@@ -77,7 +77,7 @@ def _get_main_parser() -> argparse.ArgumentParser:
         nargs=3,
         type=float,
         metavar=("last_timestamp", "last_remaining", "payment_size"),
-        help="register a payment against an existing loan",
+        help="register a payment against an existing loan and generate a payment report pdf",
     )
     parser.add_argument(
         "--verbose",
