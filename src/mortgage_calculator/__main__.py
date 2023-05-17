@@ -104,6 +104,7 @@ def _main(cli_args: Sequence[str], program: Optional[str] = None) -> None:
     inputs["payment_period"] = args.payment_period
     inputs["duration"] = args.duration
     inputs["unit"] = args.unit
+    inputs["debug"] = args.verbose
 
     mc = mortgage_calculator.MortgageCalculator(**inputs)
     if args.register_new_payment:
