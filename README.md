@@ -2,6 +2,7 @@
 
 ## Usage
 ```
+$ python -m mortgage_calculator --help
 usage: python -m mortgage_calculator [-h] [--size SIZE] [--rate RATE] [--compound-period COMPOUND_PERIOD] [--max-payment-size MAX_PAYMENT_SIZE]
                                      [--payment-period PAYMENT_PERIOD] [--duration DURATION] [--unit UNIT] [--bank-name BANK_NAME]
                                      [--borrower-name BORROWER_NAME] [--register-new-payment last_timestamp last_remaining payment_size] [--verbose]
