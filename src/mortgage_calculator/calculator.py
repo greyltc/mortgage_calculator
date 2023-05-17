@@ -89,6 +89,7 @@ class MortgageCalculator:
         # to avoid machine precision/rounding issues
         remaining: int = round(self.size * 100)
         t = self.now()
+        t0 = t
         total_paid: int = 0
 
         if self.duration:  # a mortgage simulation with a user-set duration
@@ -126,7 +127,7 @@ class MortgageCalculator:
 
             total_paid = total_paid + payment
 
-        print(f"Total paid after {hf.format_timespan(t)}: {total_paid/100} {self.unit}")
+        print(f"Total paid after {hf.format_timespan(t-t0)}: {total_paid/100} {self.unit}")
         print(f"With payments made every {hf.format_timespan(self.payment_period)}")
 
         return payments
