@@ -14,7 +14,7 @@ class MortgageCalculator:
     compound_period: float = hf.parse_timespan("1 year")  # how often interest is compounded
     max_payment_size: float = 10000  # fixed payment size
     payment_period: float = hf.parse_timespan("1 year") / 12  # how often a payment is made
-    duration: float = hf.parse_timespan("0 years")  # duration of the mortgage TODO: calculate payment from duration
+    duration: float = hf.parse_timespan("0 years")  # duration of the mortgage
     unit: str = "EUR"
     seconds_per_year: float = hf.parse_timespan("1 year")
 

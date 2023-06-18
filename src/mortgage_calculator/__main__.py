@@ -51,7 +51,6 @@ def _get_main_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--duration",
         "-d",
-        type=float,
         default=mortgage_calculator.MortgageCalculator.duration,
         help="fix the duration of the loan [s]",
     )
@@ -102,7 +101,7 @@ def _main(cli_args: Sequence[str], program: Optional[str] = None) -> None:
     inputs["compound_period"] = args.compound_period
     inputs["max_payment_size"] = args.max_payment_size
     inputs["payment_period"] = args.payment_period
-    inputs["duration"] = args.duration
+    inputs["duration"] = hf.parse_timespan(args.duration)
     inputs["unit"] = args.unit
     inputs["debug"] = args.verbose
 
