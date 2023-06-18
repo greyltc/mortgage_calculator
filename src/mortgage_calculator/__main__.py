@@ -51,8 +51,8 @@ def _get_main_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--duration",
         "-d",
-        default=mortgage_calculator.MortgageCalculator.duration,
-        help="fix the duration of the loan [s]",
+        default=hf.format_timespan(mortgage_calculator.MortgageCalculator.duration),
+        help="fix the duration of the loan",
     )
     parser.add_argument(
         "--unit",
