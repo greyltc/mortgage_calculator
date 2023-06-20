@@ -185,7 +185,7 @@ def _main(cli_args: Sequence[str], program: Optional[str] = None) -> None:
             teh_cli = " ".join(cli_args)
 
         pdf.cell(w=0, txt=f"Via: {teh_cli}", align="R", new_y="NEXT")
-        pdf.cell(w=0, txt=f"Next: -n {now} {new_remaining} X", align="R")
+        pdf.cell(w=0, txt=f"Next: -n {now} {new_remaining/100} X", align="R")
 
         iso_date = time.strftime("%Y-%m-%d", time.gmtime(now))
         name_list = [iso_date]
@@ -197,7 +197,7 @@ def _main(cli_args: Sequence[str], program: Optional[str] = None) -> None:
         report_file_name += ".pdf"
         out_path = pathlib.Path(".") / report_file_name
         pdf.output(str(out_path.resolve()))
-        print(f"Report file written to {out_path.resolve()}")
+        print(f"Report file written to file://{out_path.resolve()}")
 
         payments = []
     else:
