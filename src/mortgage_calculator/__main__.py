@@ -142,7 +142,7 @@ def _main(cli_args: Sequence[str], program: Optional[str] = None) -> None:
         pdf.set_font(style="B")
         pdf.cell(txt=f"Time between payments: ")
         pdf.set_font(style="")
-        pdf.cell(txt= f"{dt} seconds (or approximately {hf.format_timespan(dt)})", new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(txt= f"{int(dt)} seconds (or approximately {hf.format_timespan(dt)})", new_x="LMARGIN", new_y="NEXT")
 
         pdf.set_font(style="B")
         pdf.cell(txt=f"Amount remaining after the previous payment: ")
