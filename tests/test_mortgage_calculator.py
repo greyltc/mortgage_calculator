@@ -10,6 +10,10 @@ from mortgage_calculator.__main__ import _main as mortgage_calculator_main
 class MortgageCalculaotrTestCase(unittest.TestCase):
     """mortgage_calculator testing"""
 
+    def test_cli(self):
+        with_these_args = "--size 200000 --rate 3.0 -p 0 -d 10y"
+        mortgage_calculator_main(with_these_args.split())
+
     def test_help(self):
         mortgage_calculator_main(["--help"])
 

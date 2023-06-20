@@ -54,18 +54,32 @@ class MortgageCalculator:
     def process_payment(self, dt: float, remaining: int, maxp: int, force=False) -> tuple[int, int]:
         """process one payment"""
         rate_for_payment = (1 + self.EAR) ** (dt / self.seconds_per_year) - 1
-        new_from_interest = round(rate_for_payment * remaining)
+        pay_first = False  # take payment from loan before calculating interest (I think true is not standard)
+        if pay_first:
+            if (remaining > maxp) or (force):
+                payment: int = maxp
+            else:
+                payment: int = remaining
+
+            remaining = remaining - payment
+            new_from_interest = round(rate_for_payment * remaining)
+            whats_left = remaining + new_from_interest
+
+        else:  # pay after interest (like normal?)
+            new_from_interest = round(rate_for_payment * remaining)
+
+            remaining = new_from_interest + remaining
+            if (remaining > maxp) or (force):
+                payment: int = maxp
+            else:
+                payment: int = remaining
+
+            whats_left = remaining - payment
 
         if self.debug:
             print(f"{new_from_interest/100=} {self.unit}")
 
-        remaining = new_from_interest + remaining
-        if (remaining > maxp) or (force):
-            payment: int = maxp
-        else:
-            payment: int = remaining
-
-        return (payment, remaining - payment)
+        return (payment, whats_left)
 
     def now(self) -> float:
         """returns number of seconds since 1970 started"""
