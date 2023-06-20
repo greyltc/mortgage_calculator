@@ -30,16 +30,11 @@ class MortgageCalculator:
         debug: bool = debug,
     ):
         self.size = size
-        print(f"Borrowed: {self.size} {self.unit}")
         self.rate = rate
         self.compound_period = compound_period
         self.max_payment_size = max_payment_size
-        if self.max_payment_size:
-            print(f"Pre-set maximum payment: {self.max_payment_size} {self.unit}")
         self.payment_period = payment_period
         self.duration = duration
-        if self.duration:
-            print(f"Pre-set maximum mortgage length: {hf.format_timespan(duration)}")
         assert not (self.duration and self.max_payment_size), "Over constrained. Specifying both duration and payment size is a no-no."
         assert self.duration or self.max_payment_size, "Under constrained. One of duration or payment size must be given."
         self.unit = unit
@@ -101,6 +96,12 @@ class MortgageCalculator:
     def run(self) -> list[tuple[float, float, float, float]]:
         # we're gonna do all these calcs with intiger data types in hundreths of a monetary unit
         # to avoid machine precision/rounding issues
+        print(f"Borrowed: {self.size} {self.unit}")
+        if self.max_payment_size:
+            print(f"Pre-set maximum payment: {self.max_payment_size} {self.unit}")
+        if self.duration:
+            print(f"Pre-set maximum mortgage length: {hf.format_timespan(self.duration)}")
+
         remaining: int = round(self.size * 100)
         t = self.now()
         t0 = t

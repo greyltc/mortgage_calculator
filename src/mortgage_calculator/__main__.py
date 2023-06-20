@@ -120,7 +120,7 @@ def _main(cli_args: Sequence[str], program: Optional[str] = None) -> None:
         pdf.set_font(size=12)
         if args.borrower_name and args.bank_name:
             pdf.cell(txt=f"This report records a payment from {args.borrower_name} to The Bank of The {args.bank_name}.", new_x="LMARGIN", new_y="NEXT")
-        pdf.cell(txt=f"Concerning a loan with an Effective Annual Interest Rate of {mc.EAR*100:0.3f}%", new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(txt=f"It concerns a loan with an Effective Annual Interest Rate of {mc.EAR*100:0.3f}%.", new_x="LMARGIN", new_y="NEXT")
         pdf.cell(txt=" ", new_x="LMARGIN", new_y="NEXT")
 
         if not payment:  # if payment is zero, then take this to be the initial report
@@ -142,10 +142,10 @@ def _main(cli_args: Sequence[str], program: Optional[str] = None) -> None:
         pdf.set_font(style="B")
         pdf.cell(txt=f"Time between payments: ")
         pdf.set_font(style="")
-        pdf.cell(txt=hf.format_timespan(dt), new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(txt= f"{dt} seconds (or approximately {hf.format_timespan(dt)})", new_x="LMARGIN", new_y="NEXT")
 
         pdf.set_font(style="B")
-        pdf.cell(txt=f"Amount remaining after last payment: ")
+        pdf.cell(txt=f"Amount remaining after the previous payment: ")
         pdf.set_font(style="")
         pdf.cell(txt=f"{remaining/100:,.2f} {mc.unit}", new_x="LMARGIN", new_y="NEXT")
         pdf.cell(txt=" ", new_x="LMARGIN", new_y="NEXT")
