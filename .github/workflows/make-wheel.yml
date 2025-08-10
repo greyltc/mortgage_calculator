@@ -1,5 +1,5 @@
 name: CI
-run-name: ${{ github.actor }} builds a wheel
+run-name: ${{ github.actor }} builds a wheel because of ${{ github.event_name }}
 on:
   push:
     branches: [ main ]
