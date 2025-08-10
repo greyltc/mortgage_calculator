@@ -211,4 +211,4 @@ def _main(cli_args: Sequence[str], program: Optional[str] = None) -> None:
 
 
 if __name__ == "__main__":
-    _main(sys.argv[1:], "python -m mortgage_calculator")
+    _main(sys.argv[1:], "python3 -m mortgage_calculator")
