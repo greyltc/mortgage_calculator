@@ -87,7 +87,7 @@ With payments made every 4 weeks, 2 days and 8 hours
 ```
 ### New payment registration with report generation
 ```bash
-$ python3 -m mortgage_calculator -w "Isaac Newton" -b "Blue Dog" -uEUR -r2.5 -n 0 200000 0
+$ python3 -m mortgage_calculator -w "Sir Isaac Newton" -b "Blue Dog" -uEUR -r2.5 -n 0 200000 0
 Effective Annual Rate (EAR): 2.499999999999991 percent
 Payment Report file written to file:///tmp/1970-01-01_Isaac_Newton_paid_0EUR.pdf
 ```
