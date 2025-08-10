@@ -11,20 +11,20 @@ python3 -m pip install --upgrade https://github.com/greyltc/mortgage_calculator/
 ## Usage
 ```
 $ python3 -m mortgage_calculator --help
-usage: python -m mortgage_calculator [-h] [--size SIZE] [--rate RATE]
-                                     [--compound-period COMPOUND_PERIOD]
-                                     [--max-payment-size MAX_PAYMENT_SIZE]
-                                     [--payment-period PAYMENT_PERIOD]
-                                     [--duration DURATION] [--unit UNIT]
-                                     [--bank-name BANK_NAME]
-                                     [--borrower-name BORROWER_NAME]
-                                     [--register-new-payment last_timestamp last_remaining payment_size]
-                                     [--verbose]
+usage: __main__.py [-h] [--version] [--size SIZE] [--rate RATE]
+                   [--compound-period COMPOUND_PERIOD]
+                   [--max-payment-size MAX_PAYMENT_SIZE]
+                   [--payment-period PAYMENT_PERIOD] [--duration DURATION]
+                   [--unit UNIT] [--bank-name BANK_NAME]
+                   [--borrower-name BORROWER_NAME]
+                   [--register-new-payment last_timestamp last_remaining payment_size]
+                   [--verbose]
 
 crunch mortgage numbers
 
 options:
   -h, --help            show this help message and exit
+  --version             show program's version number and exit
   --size, -s SIZE       mortgage size (default: 100000)
   --rate, -r RATE       advertised interest rate [percent] (default: 4.5)
   --compound-period, -c COMPOUND_PERIOD
