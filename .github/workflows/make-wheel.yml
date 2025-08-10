@@ -1,0 +1,24 @@
+name: CI
+run-name: ${{ github.actor }} builds a wheel
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      ACTIONS_BOT_NAME: github-actions[bot]
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: build
+        run: |
+          ls ${{ github.workspace }}
+          python --version
+          echo "A redacted token is: ${{ secrets.GITHUB_TOKEN }}"
+      - name: status
+        run: |
+          echo "This job's status is ${{ job.status }}."
