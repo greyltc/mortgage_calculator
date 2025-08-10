@@ -43,7 +43,7 @@ jobs:
            ln -s "$f" "$(echo $f | cut -d'-' -f1,3-)"
          done
          cd -
-      - name: Manage release asset
+      - name: Attach asset(s) to release
         if: ${{ github.event_name == 'release' }}
         run: |
           echo "Finding latest release..."
