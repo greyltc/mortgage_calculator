@@ -1,3 +1,4 @@
+https://github.com/greyltc/mortgage_calculator/actions/workflows/make-wheel.yml/badge.svg
 # mortgage_calculator
 A tool that crunches mortgage numbers
 
