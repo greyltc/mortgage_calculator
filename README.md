@@ -1,4 +1,5 @@
-![badge](https://github.com/greyltc/mortgage_calculator/actions/workflows/make-wheel.yml/badge.svg)
+<img align="right" src="https://github.com/greyltc/mortgage_calculator/actions/workflows/make-wheel.yml/badge.svg" alt="badge" />
+
 # mortgage_calculator
 A tool that crunches mortgage numbers
 
