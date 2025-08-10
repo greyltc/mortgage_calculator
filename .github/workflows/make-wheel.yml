@@ -12,13 +12,16 @@ jobs:
     env:
       ACTIONS_BOT_NAME: github-actions[bot]
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
-      - name: get deps
+      - name: get package deps
         run: |
           sudo apt-get install --assume-yes python3-build python3-wheel python3-hatchling python3-hatch-vcs
+      - name: Check out repository code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: build
         run: |
+          pwd
           ls ${{ github.workspace }}
           python -m build --version
           python -m wheel version
