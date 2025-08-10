@@ -35,6 +35,13 @@ jobs:
           python -m wheel version
           python -m hatchling version
           echo "A redacted token is: ${{ secrets.GITHUB_TOKEN }}"
+      - name: Make asset generic
+        if: ${{ github.event_name == 'release' }}
+        run: |
+         cd dist
+         for f in *.whl; do
+           ln -s "$f" "$(echo $f | cut -d'-' -f1,3-)"
+         done
       - name: Manage release asset
         if: ${{ github.event_name == 'release' }}
         uses: softprops/action-gh-release@v2
