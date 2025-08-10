@@ -12,21 +12,22 @@ jobs:
     env:
       ACTIONS_BOT_NAME: github-actions[bot]
     steps:
-      - name: get package deps
+      - name: Install build dependencies
         run: |
           sudo apt-get install --assume-yes python3-build python3-wheel python3-hatchling python3-hatch-vcs
       - name: Check out repository code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: build
+      - name: Build wheel
         run: |
+          python -m build --wheel --no-isolation
           pwd
           ls ${{ github.workspace }}
           python -m build --version
           python -m wheel version
           python -m hatchling version
           echo "A redacted token is: ${{ secrets.GITHUB_TOKEN }}"
-      - name: status
+      - name: Print status
         run: |
           echo "This job's status is ${{ job.status }}."
