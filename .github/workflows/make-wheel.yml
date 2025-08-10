@@ -63,7 +63,7 @@ jobs:
             ASSET_UL_URL="${AUU}?name=${ASSET_NAME}"
             
             # upload asset
-            echo "Uploading asset ${ASSET_FILE} to ${ASSET_UL_URL}"
+            echo "Uploading asset ${ASSET_NAME} to ${ASSET_UL_URL}"
             # https://docs.github.com/en/rest/reference/releases#upload-a-release-asset
             curl -L \
               -X POST \
@@ -71,7 +71,7 @@ jobs:
               -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
               -H "X-GitHub-Api-Version: 2022-11-28" \
               -H "Content-Type: $(file --brief --mime-type ${ASSET_FILE})" \
-              "${ASSET_UL_URL}" \
+              "${ASSET_UL_URL}?name=${ASSET_NAME}" \
               --data-binary "@${ASSET_FILE}" \
               --output asset_resp.json
             ASSET_URL=$(cat asset_resp.json | jq --raw-output '.url')
@@ -79,7 +79,6 @@ jobs:
           }
           export -f do_asset_things
 
-          ls -al dist
           find dist -maxdepth 1 -type f,l -exec bash -c 'do_asset_things "${0}" "${1}"' "{}" "${ASSET_UL_URL}" \;
       - name: Print status
         run: |
