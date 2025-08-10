@@ -11,7 +11,7 @@ name = "mortgage_calculator"
 description = "Helps with understanding and managing loans/mortgages"
 
 authors = [
-    { name = "Greyson Christoforo", email = "grey@christoforo.net" },
+    { name = "M. Greyson Christoforo", email = "grey@christoforo.net" },
 ]
 
 readme = "README.md"
@@ -32,6 +32,9 @@ dependencies = [
     "scipy",
     "fpdf2",
 ]
+
+[project.scripts]
+mortgage-calculator = "mortgage_calculator.__main__:entrypoint"
 
 [project.urls]
 "GitHub" = "https://github.com/greyltc/mortgage_calculator"

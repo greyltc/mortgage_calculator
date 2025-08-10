@@ -90,11 +90,9 @@ def _get_main_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def _main(cli_args: Sequence[str], program: Optional[str] = None) -> None:
+def _main(cli_args: Sequence[str]) -> None:
     """Process arguments and do calcs"""
     parser = _get_main_parser()
-    if program:
-        parser.prog = program
     args = parser.parse_args(cli_args)
 
     inputs = {}
@@ -181,10 +179,7 @@ def _main(cli_args: Sequence[str], program: Optional[str] = None) -> None:
         pdf.write_html(f'Made with version {version("mortgage_calculator")} of <a href="{lnk}">{lnk}</a>')
 
         pdf.set_y(-28)
-        if program:
-            teh_cli = " ".join([program] + list(cli_args))
-        else:
-            teh_cli = " ".join(cli_args)
+        teh_cli = " ".join([parser.prog] + list(cli_args))
 
         pdf.cell(w=0, text=f"Via: {teh_cli}", align="R", new_y="NEXT")
         pdf.cell(w=0, text=f"Next: -n {now} {new_remaining/100} X", align="R")
@@ -211,6 +206,8 @@ def _main(cli_args: Sequence[str], program: Optional[str] = None) -> None:
         for i, (t, payment, interest, remaining) in enumerate(payments):
             print(f"{i+1}\t{t:.0f}\t{payment:.2f}\t{interest:.2f}\t{remaining:.2f}")
 
+def entrypoint():
+    _main(sys.argv[1:])
 
 if __name__ == "__main__":
-    _main(sys.argv[1:], "python3 -m mortgage_calculator")
+    _main(sys.argv[1:])
