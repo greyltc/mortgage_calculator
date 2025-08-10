@@ -90,9 +90,11 @@ def _get_main_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def _main(cli_args: Sequence[str]) -> None:
+def _main(cli_args: Sequence[str], prog: str | None = None) -> None:
     """Process arguments and do calcs"""
     parser = _get_main_parser()
+    if prog:
+        parser.prog = prog
     args = parser.parse_args(cli_args)
 
     inputs = {}
@@ -210,4 +212,4 @@ def entrypoint():
     _main(sys.argv[1:])
 
 if __name__ == "__main__":
-    _main(sys.argv[1:])
+    _main(sys.argv[1:], 'python3 -m mortgage_calculator')
