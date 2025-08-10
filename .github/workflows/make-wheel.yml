@@ -14,10 +14,15 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+      - name: get deps
+        run: |
+          apt install --assume-yes python3-build python3-wheel python3-hatchling python3-hatch-vcs
       - name: build
         run: |
           ls ${{ github.workspace }}
           python -m build --version
+          python -m wheel version
+          python -m hatchling version
           echo "A redacted token is: ${{ secrets.GITHUB_TOKEN }}"
       - name: status
         run: |
