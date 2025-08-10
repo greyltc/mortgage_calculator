@@ -3,6 +3,9 @@ run-name: ${{ github.actor }} builds a wheel
 on:
   push:
     branches: [ main ]
+  release:
+    types: [ published ]
+    branches: [ main ]
   pull_request:
     branches: [ main ]
   workflow_dispatch:
@@ -30,6 +33,12 @@ jobs:
           python -m wheel version
           python -m hatchling version
           echo "A redacted token is: ${{ secrets.GITHUB_TOKEN }}"
+      - name: Manage release asset
+        if: ${{ github.event_name == 'release' }}
+        uses: softprops/action-gh-release@v2
+        with:
+          files:
+            dist/*
       - name: Print status
         run: |
           echo "This job's status is ${{ job.status }}."
