@@ -115,13 +115,13 @@ def _main(cli_args: Sequence[str], program: Optional[str] = None) -> None:
         pdf = FPDF(orientation="P", unit="mm", format="A4")
         pdf.add_page()
         pdf.set_font("helvetica", "B", 16)
-        pdf.cell(w=0, txt="LOAN REPAYMENT REPORT", border=1, align="C", new_x="LMARGIN", new_y="NEXT")
-        pdf.cell(txt=" ", new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(w=0, text="LOAN REPAYMENT REPORT", border=1, align="C", new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(text=" ", new_x="LMARGIN", new_y="NEXT")
         pdf.set_font(size=12)
         if args.borrower_name and args.bank_name:
-            pdf.cell(txt=f"This report records a payment from {args.borrower_name} to The Bank of The {args.bank_name}.", new_x="LMARGIN", new_y="NEXT")
-        pdf.cell(txt=f"It concerns a loan with an Effective Annual Interest Rate of {mc.EAR*100:0.3f}%.", new_x="LMARGIN", new_y="NEXT")
-        pdf.cell(txt=" ", new_x="LMARGIN", new_y="NEXT")
+            pdf.cell(text=f"This report records a payment from {args.borrower_name} to The Bank of The {args.bank_name}.", new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(text=f"It concerns a loan with an Effective Annual Interest Rate of {mc.EAR*100:0.3f}%.", new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(text=" ", new_x="LMARGIN", new_y="NEXT")
 
         if not payment:  # if payment is zero, then take this to be the initial report
             now = then
@@ -130,25 +130,25 @@ def _main(cli_args: Sequence[str], program: Optional[str] = None) -> None:
         dt = now - then
 
         pdf.set_font(style="B")
-        pdf.cell(txt=f"Time of this payment: ")
+        pdf.cell(text=f"Time of this payment: ")
         pdf.set_font(style="")
-        pdf.cell(txt=time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.gmtime(now)), new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(text=time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.gmtime(now)), new_x="LMARGIN", new_y="NEXT")
 
         pdf.set_font(style="B")
-        pdf.cell(txt=f"Time of previous payment: ")
+        pdf.cell(text=f"Time of previous payment: ")
         pdf.set_font(style="")
-        pdf.cell(txt=time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.gmtime(then)), new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(text=time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.gmtime(then)), new_x="LMARGIN", new_y="NEXT")
 
         pdf.set_font(style="B")
-        pdf.cell(txt=f"Time between payments: ")
+        pdf.cell(text=f"Time between payments: ")
         pdf.set_font(style="")
-        pdf.cell(txt= f"{int(dt)} seconds (or approximately {hf.format_timespan(dt)})", new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(text= f"{int(dt)} seconds (or approximately {hf.format_timespan(dt)})", new_x="LMARGIN", new_y="NEXT")
 
         pdf.set_font(style="B")
-        pdf.cell(txt=f"Amount remaining after previous payment: ")
+        pdf.cell(text=f"Amount remaining after previous payment: ")
         pdf.set_font(style="")
-        pdf.cell(txt=f"{remaining/100:,.2f} {mc.unit}", new_x="LMARGIN", new_y="NEXT")
-        pdf.cell(txt=" ", new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(text=f"{remaining/100:,.2f} {mc.unit}", new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(text=" ", new_x="LMARGIN", new_y="NEXT")
 
         payment, new_remaining = mc.process_payment(dt, remaining, maxp=payment)
         principal_paydown = remaining - new_remaining
@@ -158,20 +158,20 @@ def _main(cli_args: Sequence[str], program: Optional[str] = None) -> None:
             interest_paid = payment
 
         pdf.set_font(style="B")
-        pdf.cell(txt=f"Value of this payment: ")
+        pdf.cell(text=f"Value of this payment: ")
         pdf.set_font(style="")
-        pdf.cell(txt=f"{payment/100:,.2f} {mc.unit}", new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(text=f"{payment/100:,.2f} {mc.unit}", new_x="LMARGIN", new_y="NEXT")
 
         pdf.set_font(style="B")
-        pdf.cell(txt=f"Amount of this payment that went to interest: ")
+        pdf.cell(text=f"Amount of this payment that went to interest: ")
         pdf.set_font(style="")
-        pdf.cell(txt=f"{interest_paid/100:,.2f} {mc.unit}", new_x="LMARGIN", new_y="NEXT")
-        pdf.cell(txt=" ", new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(text=f"{interest_paid/100:,.2f} {mc.unit}", new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(text=" ", new_x="LMARGIN", new_y="NEXT")
 
         pdf.set_font(style="B")
-        pdf.cell(txt=f"Total left to pay: ")
+        pdf.cell(text=f"Total left to pay: ")
         pdf.set_font(style="")
-        pdf.cell(txt=f"{new_remaining/100:,.2f} {mc.unit}", new_x="LMARGIN")
+        pdf.cell(text=f"{new_remaining/100:,.2f} {mc.unit}", new_x="LMARGIN")
 
         pdf.set_y(-25)
         pdf.set_font("helvetica", size=6)
@@ -184,8 +184,8 @@ def _main(cli_args: Sequence[str], program: Optional[str] = None) -> None:
         else:
             teh_cli = " ".join(cli_args)
 
-        pdf.cell(w=0, txt=f"Via: {teh_cli}", align="R", new_y="NEXT")
-        pdf.cell(w=0, txt=f"Next: -n {now} {new_remaining/100} X", align="R")
+        pdf.cell(w=0, text=f"Via: {teh_cli}", align="R", new_y="NEXT")
+        pdf.cell(w=0, text=f"Next: -n {now} {new_remaining/100} X", align="R")
 
         iso_date = time.strftime("%Y-%m-%d", time.gmtime(now))
         name_list = [iso_date]
