@@ -115,7 +115,7 @@ def _main(cli_args: Sequence[str], program: Optional[str] = None) -> None:
         pdf = FPDF(orientation="P", unit="mm", format="A4")
         pdf.add_page()
         pdf.set_font("helvetica", "B", 16)
-        pdf.cell(w=0, text="LOAN REPAYMENT REPORT", border=1, align="C", new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(w=0, text="\nLOAN REPAYMENT REPORT\n", border=1, align="C", new_x="LMARGIN", new_y="NEXT")
         pdf.cell(text=" ", new_x="LMARGIN", new_y="NEXT")
         pdf.set_font(size=12)
         if args.borrower_name and args.bank_name:
