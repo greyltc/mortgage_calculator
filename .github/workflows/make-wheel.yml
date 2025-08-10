@@ -14,6 +14,7 @@ jobs:
     steps:
       - name: Install build dependencies
         run: |
+          sudo apt-get remove --assume-yes man-db manpages
           sudo apt-get install --assume-yes python3-build python3-wheel python3-hatchling python3-hatch-vcs
       - name: Check out repository code
         uses: actions/checkout@v4
