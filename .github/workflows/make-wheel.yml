@@ -57,9 +57,10 @@ jobs:
           echo "Uploads will be made to ${ASSET_UL_URL}"        
 
           do_asset_things() {
-            local ASSET_FILE="$(realpath "${1}")"
+            local ASSET_FILE="${1}"
+            local REAL_FILE="$(realpath "${ASSET_FILE}")"
             local AUU="${2}"
-            ASSET_NAME="$(basename ${ASSET_FILE})"
+            ASSET_NAME="$(basename "${ASSET_FILE}")"
             ASSET_UL_URL="${AUU}?name=${ASSET_NAME}"
             
             # upload asset
@@ -70,9 +71,9 @@ jobs:
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
               -H "X-GitHub-Api-Version: 2022-11-28" \
-              -H "Content-Type: $(file --brief --mime-type ${ASSET_FILE})" \
-              "${ASSET_UL_URL}?name=${ASSET_NAME}" \
-              --data-binary "@${ASSET_FILE}" \
+              -H "Content-Type: $(file --brief --mime-type ${REAL_FILE})" \
+              "${ASSET_UL_URL}" \
+              --data-binary "@${REAL_FILE}" \
               --output asset_resp.json
             ASSET_URL=$(cat asset_resp.json | jq --raw-output '.url')
             echo "Asset upload done."
