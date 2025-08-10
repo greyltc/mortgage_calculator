@@ -24,6 +24,7 @@ jobs:
           python -m build --wheel --no-isolation
           pwd
           ls ${{ github.workspace }}
+          ls -al dist
           python -m build --version
           python -m wheel version
           python -m hatchling version
