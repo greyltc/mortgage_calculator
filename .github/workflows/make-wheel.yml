@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v4
       - name: get deps
         run: |
-          apt install --assume-yes python3-build python3-wheel python3-hatchling python3-hatch-vcs
+          run0 apt-get install --assume-yes python3-build python3-wheel python3-hatchling python3-hatch-vcs
       - name: build
         run: |
           ls ${{ github.workspace }}
