@@ -91,4 +91,4 @@ $ python3 -m mortgage_calculator -w "Isaac Newton" -b "Blue Dog" -uEUR -r2.5 -n 
 Effective Annual Rate (EAR): 2.499999999999991 percent
 Payment Report file written to file:///tmp/1970-01-01_Isaac_Newton_paid_0EUR.pdf
 ```
-![example report](examples/1970-01-01_Sir_Isaac_Newton_paid_0EUR.pdf.png)
+<img src="examples/1970-01-01_Sir_Isaac_Newton_paid_0EUR.pdf.png" width="600">
