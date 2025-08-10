@@ -197,7 +197,7 @@ def _main(cli_args: Sequence[str], program: Optional[str] = None) -> None:
         report_file_name += ".pdf"
         out_path = pathlib.Path(".") / report_file_name
         pdf.output(str(out_path.resolve()))
-        print(f"Report file written to file://{out_path.resolve()}")
+        print(f"Payment Report file written to file://{out_path.resolve()}")
 
         payments = []
     else:
