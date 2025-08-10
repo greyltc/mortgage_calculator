@@ -48,8 +48,9 @@ options:
 ```
 
 ## Example Usage
-### Fixed payment simulation
-#### 500/month
+### Simulating mortgages
+#### Fixed payment simulation
+##### 500/month
 ```
 $ python3 -m mortgage_calculator --size 200000 --rate 2.5 -p 500
 Effective Annual Rate (EAR): 2.499999999999991 percent
@@ -58,8 +59,21 @@ Pre-set maximum payment: 500.0 EUR
 Total paid after 70 years, 21 weeks and 4 days: 422045.5 EUR
 With payments made every 4 weeks, 2 days and 8 hours
 ```
-### Fixed length simulation
-#### 10 years
+#### Fixed length simulation
+##### 30 years
+```
+$ python3 -m mortgage_calculator --size 200000 --rate 2.5 -p 0 -d 30y
+Effective Annual Rate (EAR): 2.499999999999991 percent
+Borrowed: 200000.0 EUR
+Pre-set maximum mortgage length: 30 years
+Maximum duration loan of 30 years
+With payments made every 4 weeks, 2 days and 8 hours
+Results in 360 payments and an actual duration of 30 years
+Discovered payment value: 787.31 EUR
+Total paid after 30 years, 4 weeks and 2 days: 283433.23 EUR
+With payments made every 4 weeks, 2 days and 8 hours
+```
+##### 10 years
 ```
 $ python3 -m mortgage_calculator --size 200000 --rate 2.5 -p 0 -d 10y
 Effective Annual Rate (EAR): 2.499999999999991 percent
@@ -85,7 +99,8 @@ Discovered payment value: 6881.63 EUR
 Total paid after 2 years, 30 weeks and 2 days: 206449.03 EUR
 With payments made every 4 weeks, 2 days and 8 hours
 ```
-### New payment registration with report generation
+### Managing/bookeeping a mortgage
+#### New payment registration with report generation
 ```bash
 $ python3 -m mortgage_calculator -w "Sir Isaac Newton" -b "Blue Dog" -uEUR -r2.5 -n 0 200000 0
 Effective Annual Rate (EAR): 2.499999999999991 percent
