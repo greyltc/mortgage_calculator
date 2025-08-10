@@ -1,4 +1,10 @@
 # mortgage_calculator
+A tool that crunches mortgage numbers
+
+## Installation
+```
+python3 -m pip install --upgrade https://github.com/greyltc/mortgage_calculator/releases/latest/download/mortgage_calculator-py3-none-any.whl
+```
 
 ## Usage
 ```
