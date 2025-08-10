@@ -40,7 +40,9 @@ jobs:
         run: |
          cd dist
          for f in *.whl; do
-           ln -s "$f" "$(echo $f | cut -d'-' -f1,3-)"
+           part1=$(echo "$f" | cut -d'-' -f1)
+           part2=$(echo "$f" | cut -d'-' -f3-)
+           ln -s "$f" "${part1}-1-${part2}"
          done
          cd -
       - name: Attach asset(s) to release
