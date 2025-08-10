@@ -8,11 +8,13 @@ from typing import Optional, Sequence
 from fpdf import FPDF
 import time
 import pathlib
+from importlib.metadata import version
 
 
 def _get_main_parser() -> argparse.ArgumentParser:
     """Construct the main parser."""
     parser = argparse.ArgumentParser(description="crunch mortgage numbers", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('--version', action='version', version=version("mortgage_calculator"))
     parser.add_argument(
         "--size",
         "-s",
@@ -176,7 +178,7 @@ def _main(cli_args: Sequence[str], program: Optional[str] = None) -> None:
         pdf.set_y(-25)
         pdf.set_font("helvetica", size=6)
         lnk = "https://github.com/greyltc/mortgage_calculator"
-        pdf.write_html(f'Made with <a href="{lnk}">{lnk}</a>')
+        pdf.write_html(f'Made with version {version("mortgage_calculator")} of <a href="{lnk}">{lnk}</a>')
 
         pdf.set_y(-28)
         if program:
