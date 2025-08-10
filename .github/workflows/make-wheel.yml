@@ -17,7 +17,7 @@ jobs:
       - name: build
         run: |
           ls ${{ github.workspace }}
-          python --version
+          python -m build --version
           echo "A redacted token is: ${{ secrets.GITHUB_TOKEN }}"
       - name: status
         run: |
